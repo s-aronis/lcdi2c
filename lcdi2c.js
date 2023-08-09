@@ -10,7 +10,7 @@
  * http://www.espruino.com/LCD1602
  */
 const i2c = require('i2c-bus');
-const sleep = require('sleep');
+// const sleep = require('sleep');
 
 let LCD = class LCD {
     constructor(device, address, cols, rows) {
@@ -132,7 +132,8 @@ LCD.prototype.init = function (){
 }
 
 LCD.prototype._sleep = function (milli) {
-	sleep.usleep(milli * 1000);
+	// sleep.usleep(milli * 1000);
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, milli);
 };
 // =======
         this.buffer = new Buffer(3);  //Required for printlnBuffer.
@@ -226,7 +227,8 @@ LCD.prototype._sleep = function (milli) {
 // >>>>>>> master
 
     _sleep(milli) {
-        sleep.usleep(milli * 1000);
+        Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, milli);
+        // sleep.usleep(milli * 1000);
     };
 
     write4(x, c) {
